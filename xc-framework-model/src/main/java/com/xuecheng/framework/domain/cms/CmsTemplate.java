@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
+ * 站点模板
+ *
  * @author chenz
  */
 @Data
@@ -12,15 +14,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CmsTemplate {
 
     /**
-     * 站点ID
-     */
-    private String siteId;
-
-    /**
      * 模版ID
      */
     @Id
     private String templateId;
+
+    /**
+     * 站点ID
+     */
+    private String siteId;
 
     /**
      * 模版名称

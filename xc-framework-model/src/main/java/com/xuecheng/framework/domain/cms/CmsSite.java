@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 /**
+ * 站点信息
+ *
  * @author chenz
  */
 @Data
