@@ -6,6 +6,8 @@ import com.xuecheng.framework.domain.cms.request.CmsPageRequest;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  * @create 2019-08-15 0:01
  */
 @RestController
+@RequestMapping("/cms/page")
 public class CmsPageController implements CmsPageControllerApi {
     /**
      * 查询列表
@@ -24,8 +27,9 @@ public class CmsPageController implements CmsPageControllerApi {
      * @param cmsPageRequest
      * @return
      */
+    @RequestMapping("/list/{page}/{size}")
     @Override
-    public QueryResponseResult findList(int page, int size, CmsPageRequest cmsPageRequest) {
+    public QueryResponseResult findList(@PathVariable("page") int page,@PathVariable("size") int size, CmsPageRequest cmsPageRequest) {
         //暂时采用测试数据，测试接口是否可以正常运行
         QueryResult queryResult = new QueryResult();
         queryResult.setTotal(2);
