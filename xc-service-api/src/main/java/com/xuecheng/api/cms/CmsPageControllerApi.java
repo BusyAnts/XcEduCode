@@ -1,8 +1,14 @@
 package com.xuecheng.api.cms;
 
+import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.CmsPageRequest;
+import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.QueryResponseResult;
-import io.swagger.annotations.*;
+import com.xuecheng.framework.model.response.ResponseResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author chenz
@@ -24,4 +30,50 @@ public interface CmsPageControllerApi {
             @ApiImplicitParam(name = "size", value = "每页记录数", required = true, paramType = "path", dataType = "int"),
     })
     QueryResponseResult findList(int page, int size, CmsPageRequest cmsPageRequest);
+
+    /**
+     * 添加页面
+     *
+     * @param cmsPage
+     * @return
+     */
+    @ApiOperation("添加页面")
+    CmsPageResult add(CmsPage cmsPage);
+
+    /**
+     * 通过Id查询页面
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation("通过Id查询页面")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "页面Id", required = true, paramType = "path", dataType = "String"),
+    })
+    CmsPage findById(String id);
+
+    /**
+     * 修改页面
+     *
+     * @param id
+     * @param cmsPage
+     * @return
+     */
+    @ApiOperation("修改页面")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "页面Id", required = true, paramType = "path", dataType = "String"),
+    })
+    CmsPageResult edit(String id, CmsPage cmsPage);
+
+    /**
+     * 通过ID删除页面
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation("通过ID删除页面")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "页面Id", required = true, paramType = "path", dataType = "String"),
+    })
+    ResponseResult delete(String id);
 }
