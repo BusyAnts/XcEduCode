@@ -2,7 +2,9 @@ package com.xuecheng.manage_cms.service.impl;
 
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.CmsPageRequest;
+import com.xuecheng.framework.domain.cms.response.CmsCode;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
+import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
@@ -81,6 +83,10 @@ public class CmsPageServiceImpl implements CmsPageService {
      */
     @Override
     public CmsPageResult add(CmsPage cmsPage) {
+        if (cmsPage == null) {
+            ExceptionCast.cast(CommonCode.IllegalArgument);
+        }
+
         //校验页面是否存在，根据页面名称、站点Id、页面webPath查询
         CmsPage oriCmsPage = cmsPageRepository.findByPageNameAndSiteIdAndPageWebPath(cmsPage.getPageName(),
                 cmsPage.getSiteId(), cmsPage.getPageWebPath());
@@ -90,6 +96,8 @@ public class CmsPageServiceImpl implements CmsPageService {
             cmsPageRepository.save(cmsPage);
             CmsPageResult cmsPageResult = new CmsPageResult(CommonCode.SUCCESS, cmsPage);
             return cmsPageResult;
+        } else {
+            ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
         }
         return new CmsPageResult(CommonCode.FAIL, null);
     }
@@ -118,6 +126,10 @@ public class CmsPageServiceImpl implements CmsPageService {
      */
     @Override
     public CmsPageResult update(String id, CmsPage cmsPage) {
+        if (cmsPage == null) {
+            ExceptionCast.cast(CommonCode.IllegalArgument);
+        }
+
         //根据id查询页面信息
         CmsPage one = getById(id);
         if (one != null) {

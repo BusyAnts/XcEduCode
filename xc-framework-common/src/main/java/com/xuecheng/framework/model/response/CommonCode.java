@@ -7,11 +7,29 @@ import lombok.ToString;
  */
 @ToString
 public enum CommonCode implements ResultCode {
-
+    /**
+     * 操作成功！
+     */
     SUCCESS(true, 10000, "操作成功！"),
+    /**
+     * 操作失败！
+     */
     FAIL(false, 11111, "操作失败！"),
+    /**
+     * 此操作需要登陆系统！
+     */
     UNAUTHENTICATED(false, 10001, "此操作需要登陆系统！"),
+    /**
+     * 权限不足，无权操作！
+     */
     UNAUTHORISE(false, 10002, "权限不足，无权操作！"),
+    /**
+     * 非法参数！
+     */
+    IllegalArgument(false,10003,"非法参数！"),
+    /**
+     * 抱歉，系统繁忙，请稍后重试！
+     */
     SERVER_ERROR(false, 99999, "抱歉，系统繁忙，请稍后重试！");
 
     /**
