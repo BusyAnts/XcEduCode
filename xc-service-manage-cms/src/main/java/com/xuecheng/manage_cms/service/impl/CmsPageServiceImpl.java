@@ -7,10 +7,9 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
 import com.xuecheng.manage_cms.dao.CmsPageRepository;
 import com.xuecheng.manage_cms.service.CmsPageService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 
@@ -45,12 +44,28 @@ public class CmsPageServiceImpl implements CmsPageService {
         if (size <= 0) {
             size = 20;
         }
+
+        //条件匹配器
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withMatcher("pageAlias", ExampleMatcher.GenericPropertyMatchers.contains());
+        //条件值
+        CmsPage cmsPage = new CmsPage();
+        //站点id
+        if (StringUtils.isNotEmpty(cmsPageRequest.getSiteId())) {
+            cmsPage.setSiteId(cmsPageRequest.getSiteId());
+        }
+        //站点别名
+        if (StringUtils.isNotEmpty(cmsPageRequest.getPageAlias())) {
+            cmsPage.setPageAlias(cmsPageRequest.getPageAlias());
+        }
+        Example<CmsPage> example = Example.of(cmsPage, exampleMatcher);
+
         //分页查询
-        Pageable pageable = PageRequest.of(page,size);
-        Page<CmsPage> all = cmsPageRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CmsPage> all = cmsPageRepository.findAll(example, pageable);
         QueryResult<CmsPage> cmsPageQueryResult = new QueryResult<CmsPage>();
         cmsPageQueryResult.setList(all.getContent());
         cmsPageQueryResult.setTotal(all.getTotalElements());
-        return new QueryResponseResult(CommonCode.SUCCESS,cmsPageQueryResult);
+        return new QueryResponseResult(CommonCode.SUCCESS, cmsPageQueryResult);
     }
 }

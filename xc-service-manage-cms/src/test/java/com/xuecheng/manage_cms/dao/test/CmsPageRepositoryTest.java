@@ -7,9 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -77,11 +75,38 @@ public class CmsPageRepositoryTest {
     @Test
     public void testUpdate() {
         Optional<CmsPage> optional = cmsPageRepository.findById("5abefd525b05aa293098fca6");
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             CmsPage cmsPage = optional.get();
             cmsPage.setPageName("测试页面01");
             cmsPageRepository.save(cmsPage);
         }
+    }
+
+
+    /**
+     * 自定义条件查询
+     */
+    @Test
+    public void testFindAll() {
+        //条件匹配器
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        exampleMatcher = exampleMatcher.withMatcher("pageAlias",
+                ExampleMatcher.GenericPropertyMatchers.contains());
+        //页面别名模糊查询，需要自定义字符串的匹配器实现模糊查询
+        //ExampleMatcher.GenericPropertyMatchers.contains() 包含
+        //ExampleMatcher.GenericPropertyMatchers.startsWith()//开头匹配
+        //条件值
+        CmsPage cmsPage = new CmsPage();
+        //站点ID
+        cmsPage.setSiteId("5a751fab6abb5044e0d19ea1");
+        //模板ID
+        cmsPage.setTemplateId("5a962c16b00ffc514038fafd");
+        cmsPage.setPageAlias("分类导航");
+        //创建条件实例
+        Example<CmsPage> example = Example.of(cmsPage, exampleMatcher);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<CmsPage> all = cmsPageRepository.findAll(example, pageable);
+        System.out.println(all);
     }
 
 }
