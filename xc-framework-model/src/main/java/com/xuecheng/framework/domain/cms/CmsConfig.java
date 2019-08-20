@@ -18,4 +18,5 @@ public class CmsConfig {
     private String name;
     private List<CmsConfigModel> model;
 
+
 }

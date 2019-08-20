@@ -27,6 +27,7 @@
         <jwt.version>1.0.10.RELEASE</jwt.version>
         <fastjson.version>1.2.59</fastjson.version>
         <zip4j.version>1.3.3</zip4j.version>
+        <commoms-io.version>2.6</commoms-io.version>
 
         <!-- Spring Boot -->
         <spring-boot-starter-security.version>2.1.7.RELEASE</spring-boot-starter-security.version>
@@ -110,6 +111,13 @@
                 <groupId>net.lingala.zip4j</groupId>
                 <artifactId>zip4j</artifactId>
                 <version>${zip4j.version}</version>
+            </dependency>
+
+            <!-- apache相关-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commoms-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
