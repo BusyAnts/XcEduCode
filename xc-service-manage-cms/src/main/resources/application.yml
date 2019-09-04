@@ -1,3 +1,6 @@
+server:
+  port: 31001
+
 spring:
   application:
     name: xc-servcie-manage-cms
@@ -5,8 +8,10 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: xc_cms
+  freemarker:
+    cache: false #关闭模板缓存，方便测试
+    settings:
+      template_update_delay: 0
 
-server:
-  port: 31001
 
 
